@@ -1,0 +1,75 @@
+<template>
+  <transition name="slide">
+    <div class="music-list">
+      <back-header :title="title" :description="description" :descShow="descShow" @back="back" />
+      <song-list @select="playSong" :songs="songListDesc" :songList="songList" :collectNums="collectNums" :collectShow="collectShow"></song-list>
+    </div>
+  </transition>
+</template>
+
+<script>
+import BackHeader from 'base/back-header/back-header'
+import SongList from 'base/song-list/song-list'
+import * as apiData from 'api/data'
+import { CODE_OK } from 'common/js/config'
+import { mapActions } from 'vuex'
+
+export default {
+  data () {
+    return {
+      songList: {},
+      songListDesc: [],
+      title: '歌单',
+      description: '编辑推荐：',
+      descShow: true,
+      collectNums: 0,
+      collectShow: true
+    }
+  },
+  created () {
+    this._getSongListDesc()
+  },
+  methods: {
+    playSong (song, index) {
+      this.selectPlay({
+        list: this.songListDesc,
+        index
+      })
+    },
+    back () {
+      this.$router.back()
+    },
+    _getSongListDesc () {
+      apiData.getSongListDesc(this.$route.query.id).then(res => {
+        if (res.data.code === CODE_OK) {
+          this.songList = res.data.playlist
+          this.collectNums = this.songList.subscribedCount
+          this.description += this.songList.description
+          this.songListDesc = this.songList.tracks
+        }
+      })
+    },
+    ...mapActions([
+      'selectPlay'
+    ])
+  },
+  components: {
+    BackHeader,
+    SongList
+  }
+}
+</script>
+
+<style lang="stylus" scoped>
+  .slide-enter-active, .slide-leave-active
+    transition all 0.3s
+  .slide-enter, .slide-leave-to
+    transform translate3d(100%, 0, 0)
+  .music-list
+    position fixed
+    top 0
+    left 0
+    bottom 0
+    right 0
+    background #fff
+</style>
