@@ -19,8 +19,8 @@
     </div>
     <div class="player-header" v-show="player">
       <div class="song-desc">
-        <p class="song-name">{{songName}}</p>
-        <p class="singer">{{singer}}<i class="icon iconfont music-arrow-right"></i></p>
+        <p class="song-name" v-html="songName"></p>
+        <p class="singer" v-html="singer"><i class="icon iconfont music-arrow-right"></i></p>
       </div>
       <div class="share">
         <i class="icon iconfont music-share"></i>
@@ -108,7 +108,7 @@ export default {
           font-size 12px
           color #a0a0a0
         .singer
-          padding-top 0
+          padding 0.6rem 0
     .player-header
       margin-left 15px
       display grid

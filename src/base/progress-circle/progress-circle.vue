@@ -40,9 +40,9 @@ export default {
       stroke-width: 8px
       transform-origin: center
       &.progress-background
-        transform: scale(0.9)
+        transform: scale(0.3)
         stroke: #473
       &.progress-bar
-        transform: scale(0.9) rotate(-90deg)
+        transform: scale(0.3) rotate(-90deg)
         stroke: #f8f
 </style>

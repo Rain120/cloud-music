@@ -16,8 +16,8 @@ const mutations = {
   [types.SET_PLAY_MODE] (state, payload) {
     state.playMode = payload
   },
-  [types.SET_CURRENT_PLAY_INDEX] (state, payload) {
-    state.currentPlayIndex = payload
+  [types.SET_CURRENT_INDEX] (state, index) {
+    state.currentIndex = index
   }
 }
 

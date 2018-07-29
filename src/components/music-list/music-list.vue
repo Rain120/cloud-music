@@ -26,18 +26,27 @@ export default {
       collectShow: true
     }
   },
-  created () {
-    this._getSongListDesc()
+  mounted () {
+    this.$nextTick(() => {
+      this._getSongListDesc()
+    })
   },
   methods: {
     playSong (song, index) {
       this.selectPlay({
-        list: this.songListDesc,
+        songs: this.songListDesc,
         index
       })
     },
     back () {
       this.$router.back()
+    },
+    normalizeSongs (songs) {
+      return songs.map((song, index) => {
+        song.singer = song.ar.map(item => item.name)[0]
+        song.picUrl = song.al.picUrl
+        song.playUrl = `http://music.163.com/song/media/outer/url?id=${song.id}.mp3`
+      })
     },
     _getSongListDesc () {
       apiData.getSongListDesc(this.$route.query.id).then(res => {
@@ -46,6 +55,7 @@ export default {
           this.collectNums = this.songList.subscribedCount
           this.description += this.songList.description
           this.songListDesc = this.songList.tracks
+          this.normalizeSongs(this.songListDesc)
         }
       })
     },

@@ -56,7 +56,7 @@
         </div>
         <div class="recommend-new-music common">
           <div class="title">最新音乐<i class="icon iconfont music-arrow-right"></i></div>
-          <div class="new-song-content  common-content">
+          <div class="new-song-content common-content">
               <ul>
                 <li  @click="showNewSong(song)" v-for="(song, index) in recommendNewSong" :key="index">
                   <img v-lazy="song.album.picUrl">
@@ -189,35 +189,35 @@ export default {
     height 100%
     overflow hidden
     .tabs
-      height 100px
+      height 5rem
       display flex
-      border-bottom 0.2px solid #eee
+      border-thin(#a0a0a0)
       .tab
         width 25%
         text-align center
         .icon-wrapper
-          width 60px
-          height 60px
+          width 2.5rem
+          height 2.5rem
           margin 7px auto
           border-radius 50%
           border 1.5px solid #d33a31
           position relative
           .date
             position absolute
-            top 24px
+            top 16px
             left 0px
             right 0
             bottom 0
             text-align center
             color #d33a31
-            font-size 19px
+            font-size 16px
           .icon
-            font-size 30px
-            line-height 60px
+            font-size 27px
+            line-height 2.5rem
             color #d33a31
-          .description
-            color #303131
-            font-size 14px
+        .description
+          color #303131
+          font-size 13px
 
     .common
       margin-bottom 0.6rem
@@ -227,7 +227,7 @@ export default {
         font-size 18px
         font-weight 600
         text-indent 5px
-        margin 10px 0 10px -1px
+        margin 10px 0 10px 5px
         color #303131
         &.icon
           color #919293
