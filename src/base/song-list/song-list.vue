@@ -29,7 +29,7 @@
         <div class="songs">
           <div class="operate">
             <div class="play">
-              <div class="play-btn">
+              <div class="play-btn" @click="palyAll">
                 <i class="icon iconfont music-play"></i>
               </div>
               <span class="songs-num">{{playNums()}}</span>
@@ -103,11 +103,14 @@ export default {
       this.$refs.list.style.bottom = bottom
       this.$refs.scroll.refresh()
     },
+    palyAll () {
+      this.$emit('playAll')
+    },
     selectItem (song, index) {
       this.$emit('select', song, index)
     },
     playNums () {
-      return `播放全部(共${this.songs.length})`
+      return `播放全部(共${this.songs.length})首`
     },
     collectNum () {
       if (this.collectNums <= Math.pow(10, 5)) {

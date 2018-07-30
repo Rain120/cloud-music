@@ -2,7 +2,13 @@
   <transition name="slide">
     <div class="music-list">
       <back-header :title="title" :description="description" :descShow="descShow" @back="back" />
-      <song-list @select="playSong" :songs="songListDesc" :songList="songList" :collectNums="collectNums" :collectShow="collectShow"></song-list>
+      <song-list
+        @select="playSong"
+        @playAll="playAll"
+        :songs="songListDesc"
+        :songList="songList"
+        :collectNums="collectNums"
+        :collectShow="collectShow"></song-list>
     </div>
   </transition>
 </template>
@@ -38,6 +44,11 @@ export default {
         index
       })
     },
+    playAll () {
+      this.randomPlay({
+        songs: this.songListDesc
+      })
+    },
     back () {
       this.$router.back()
     },
@@ -60,7 +71,8 @@ export default {
       })
     },
     ...mapActions([
-      'selectPlay'
+      'selectPlay',
+      'randomPlay'
     ])
   },
   components: {

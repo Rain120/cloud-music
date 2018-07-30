@@ -30,7 +30,7 @@
           <span class="time time-end">{{formatTime(currentSong.dt / 1000)}}</span>
         </div>
         <div class="handoff">
-          <div class="handoff-icon" @click="changeMode"><i class="mode icon iconfont" :class="iconMode"></i></div>
+          <div class="handoff-icon" @click="changeMode"><i class="mode icon iconfont" :class="iconPlayMode"></i></div>
           <div class="handoff-icon" @click="prevSong" :class="disableBtn"><i class="prev icon iconfont music-prev"></i></div>
           <div class="handoff-icon" @click="togglePlaying" :class="disableBtn"><i class="run icon iconfont music-play" :class="playIcon"></i></div>
           <div class="handoff-icon" @click="nextSong" :class="disableBtn"><i class="next icon iconfont music-next"></i></div>
@@ -47,7 +47,7 @@
         <p class="desc">{{currentSong.singer}}</p>
       </div>
       <div class="control" @click.stop="togglePlaying">
-        <progress-circle :percent="percent">
+        <progress-circle :radius="radius"  :percent="percent">
           <i :class="miniIcon" class="common icon iconfont music-play"></i>
         </progress-circle>
       </div>
@@ -55,7 +55,13 @@
         <i class="icon iconfont music-more-music"></i>
       </div>
     </div>
-    <audio ref="audio" :src="currentSong.playUrl" @canplay="ready" @error="error" @timeupdate="updateTime"></audio>
+    <audio
+      ref="audio"
+      :src="currentSong.playUrl"
+      @canplay="ready"
+      @error="error"
+      @timeupdate="updateTime"
+      @ended="end"></audio>
   </div>
 </template>
 
@@ -64,6 +70,7 @@ import BackHeader from 'base/back-header/back-header'
 import ProgressBar from 'base/progress-bar/progress-bar'
 import ProgressCircle from 'base/progress-circle/progress-circle'
 import { playMode } from 'common/js/config'
+import { shuffle } from 'common/js/util'
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
@@ -71,11 +78,15 @@ export default {
     return {
       player: true,
       songReady: false,
-      currentTime: 0
+      currentTime: 0,
+      radius: 36
     }
   },
   watch: {
-    currentSong () {
+    currentSong (newSong, oldSong) {
+      if (newSong.id === oldSong.id) {
+        return
+      }
       this.$nextTick(() => {
         this.$refs.audio.play()
       })
@@ -94,7 +105,7 @@ export default {
     playIcon () {
       return this.playing ? 'music-pause' : 'music-play'
     },
-    iconMode () {
+    iconPlayMode () {
       return this.playMode === playMode.loop ? 'music-loop' : this.playMode === playMode.shuffle ? 'music-Shuffle' : 'music-single'
     },
     miniIcon () {
@@ -109,7 +120,8 @@ export default {
       'playMode',
       'playing',
       'currentSong',
-      'currentIndex'
+      'currentIndex',
+      'sequenceList'
     ])
   },
   methods: {
@@ -160,6 +172,19 @@ export default {
 
       this.songReady = false
     },
+    loop () {
+      this.$refs.audio.currentTime = 0
+      this.$nextTick(() => {
+        this.$refs.audio.play()
+      })
+    },
+    end () {
+      if (this.playMode === playMode.single) {
+        this.loop()
+      } else {
+        this.nextSong()
+      }
+    },
     ready () {
       this.songReady = true
     },
@@ -171,7 +196,22 @@ export default {
     },
     changeMode () {
       const mode = (this.playMode + 1) % 3
+      console.log(mode)
       this.setPlayMode(mode)
+      let list = null
+      if (mode === this.playMode) {
+        list = shuffle(this.sequenceList)
+      } else {
+        list = this.sequenceList
+      }
+      this.resetCurrentIndex(list)
+      this.setPlaylist(list)
+    },
+    resetCurrentIndex (list, song) {
+      let index = list.findIndex(item => {
+        return item.id === this.currentSong.id
+      })
+      this.setCurrentIndex(index)
     },
     togglePlay () {
       if (!this.songReady) {
@@ -203,7 +243,8 @@ export default {
       setFullScreen: 'SET_FULL_SCREEN',
       setPlayMode: 'SET_PLAY_MODE',
       setPlayingState: 'SET_PLAYING_STATE',
-      setCurrentIndex: 'SET_CURRENT_INDEX'
+      setCurrentIndex: 'SET_CURRENT_INDEX',
+      setPlaylist: 'SET_PLAYLIST'
     })
   },
   components: {
@@ -280,6 +321,8 @@ export default {
         bottom 30px
         width 100%
         .operators
+          width 70%
+          margin 0 auto
           display flex
           text-align center
           .op-icon
@@ -358,25 +401,19 @@ export default {
           color #222
       .control
         flex 0 0 30px
-        width 50px
+        width 30px
         padding 0 10px
-        .music-play, .music-pause
-          z-index -1
-          background rgba(230, 229, 229, 0.8)
         .music-play
-          font-size 36px
-          position absolute
-          left 0.8rem
-          top 2rem
-        .music-pause
           font-size 33px
+        .common
+          font-size 31px
           position absolute
-          left 0.86rem
-          top 2.1rem
+          left -1.09rem
+          top 0.2rem
         .music-more-music
           font-size 33px
           position relative
-          right .58rem
+          right 1.5rem
   @keyframes rotate
     0%
       transform rotate(0)

@@ -37,12 +37,12 @@ export default {
   .progress-circle
     position: relative
     circle
-      stroke-width: 8px
+      stroke-width: 10px
       transform-origin: center
       &.progress-background
-        transform: scale(0.3)
+        transform: scale(0.9)
         stroke: #473
       &.progress-bar
-        transform: scale(0.3) rotate(-90deg)
+        transform: scale(0.9) rotate(-90deg)
         stroke: #f8f
 </style>
