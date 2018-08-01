@@ -97,6 +97,7 @@ export default {
         font-size 0
         .title, .song-name
           font-size 19px
+          no-wrap()
         .nodesc
           font-size 20px
           display inline-block
@@ -106,16 +107,15 @@ export default {
           no-wrap()
           padding-top 5px
           font-size 12px
-          color #a0a0a0
+          color #000
         .singer
-          padding 0.6rem 0
+          padding 0.4rem 0
     .player-header
       margin-left 15px
       display grid
-      grid-template-columns 90% 20%
+      grid-template-columns 80% 20%
       border-thin(#a0a0a0)
       .song-desc
-        line-height 0.8rem
         i
           font-size 12px
           color #a0a0a0

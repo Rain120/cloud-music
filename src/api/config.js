@@ -9,7 +9,7 @@ let apiConfig = {
   recommendPrivatePath: url + '/personalized/privatecontent',
   musicListDetailPath: url + 'recommendMVPath',
   AlbumDetailPath: url + '/album',
-  lyricPath: url + '/lyric',
+  lyric: url + '/lyric',
   topMV: url + '/top/mv',
   MVDetail: url + '/mv',
   MVSimi: url + '/simi/mv',

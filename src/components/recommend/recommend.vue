@@ -239,6 +239,7 @@ export default {
           display grid
           grid-template-columns repeat(3, 1fr)
           li
+            margin-bottom 0.5rem
             box-sizing border-box
             position relative
             img

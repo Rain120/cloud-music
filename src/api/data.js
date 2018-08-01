@@ -2,7 +2,7 @@
  * @Author: Rainy
  * @Date: 2018-03-26 16:03:05
  * @Last Modified by: Rainy
- * @Last Modified time: 2018-06-26 12:08:27
+ * @Last Modified time: 2018-08-01 21:10:18
  */
 // 详见 https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi
 import axios from 'axios'
@@ -26,7 +26,7 @@ export function getAlbum (id) {
 
 // 获取歌词
 export function getLyric (id) {
-  let url = apiConfig.lyricPath + `?id=${id}`
+  let url = apiConfig.lyric + `?id=${id}`
   return axios.get(url).then(res => {
     return Promise.resolve(res)
   })
