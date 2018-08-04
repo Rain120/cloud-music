@@ -71,6 +71,7 @@ export default {
   .back-header
     width 100%
     margin-top 10px
+    z-index 50
     display flex
     .back
       padding 0 10px
