@@ -1,10 +1,16 @@
 <template>
   <div class="song-list" ref="list">
-    <scroll class="scroll-wrapper" ref="scroll" :data="songs">
+    <scroll
+      class="scroll-wrapper"
+      ref="scroll"
+      :probeType="probeType"
+      :listen-scroll="listenScroll"
+      :data="songs"
+      @scroll="scrollPos">
       <div>
         <div class="songinfo">
           <div class="list-img">
-            <img :src="songList.coverImgUrl" />
+            <img v-lazy="songList.coverImgUrl" />
           </div>
           <div class="list-desc">{{songList.name}}</div>
         </div>
@@ -71,6 +77,10 @@ export default {
       songsnum: ''
     }
   },
+  created () {
+    this.probeType = 3
+    this.listenScroll = true
+  },
   mounted () {
     this.$nextTick(() => {
       this.$refs.scroll.refresh()
@@ -98,6 +108,15 @@ export default {
     }
   },
   methods: {
+    scrollPos (pos) {
+      let title = false
+      if (pos.y < -240) {
+        title = true
+      } else {
+        title = false
+      }
+      this.$emit('changeTitle', title)
+    },
     handlePlaylist (playList) {
       const bottom = playList.length > 0 ? '60px' : ''
       this.$refs.list.style.bottom = bottom

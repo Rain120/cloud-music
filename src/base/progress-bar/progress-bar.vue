@@ -88,7 +88,7 @@ export default {
       .progress
         position absolute
         height 100%
-        background #f8f
+        background #14ce3d
       .progress-btn-wrapper
         position absolute
         left -8px
@@ -104,5 +104,5 @@ export default {
           height 16px
           border 3px solid #fff
           border-radius 50%
-          background #473
+          background #d91a1a
 </style>

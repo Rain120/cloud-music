@@ -64,15 +64,22 @@
       </div>
     </transition>
     <transition name="mini">
-      <div class="mini-player" @click="open" v-show="!fullScreen">
+      <div
+        class="mini-player"
+        v-show="!fullScreen"
+        ref="miniplayer"
+        @click="open"
+        @touchstart.prevent="middleTouchStart"
+        @touchmove.prevent="middleTouchMove"
+        @touchend="middleTouchEnd">
         <div class="icon">
           <img :class="cdRotate" width="40" height="40" :src="currentSong.picUrl">
         </div>
         <div class="text">
           <h2 class="name">{{currentSong.name}}</h2>
-          <p class="desc" v-show="!this.playing">{{currentSong.singer}}</p>
-          <div class="playing-lyric-wrapper" v-show="this.playing">
-            <div class="playing-lyric">{{playingLiric}}</div>
+          <p class="desc" v-if="!this.playing">{{currentSong.singer}}</p>
+          <div class="playing-lyric-wrapper" v-else>
+            <div class="playing-lyric" ref="miniLyric">{{playingLiric}}</div>
           </div>
         </div>
         <div class="control" @click.stop="togglePlaying">
@@ -117,7 +124,8 @@ export default {
       currentLineNum: 0,
       radius: 36,
       currentShow: 'cd',
-      playingLiric: ''
+      playingLiric: '',
+      delayTime: 0
     }
   },
   watch: {
@@ -157,6 +165,9 @@ export default {
     miniIcon () {
       return this.playing ? 'icon-pause-mini music-pause' : 'icon-play-mini music-play'
     },
+    disableBtn () {
+      return this.songReady ? '' : 'disable'
+    },
     percent () {
       return this.currentTime / (this.currentSong.dt / 1000)
     },
@@ -170,6 +181,9 @@ export default {
       'sequenceList'
     ])
   },
+  created () {
+    this.touch = {}
+  },
   methods: {
     getSongLyric () {
       let id = this.currentSong.id
@@ -181,13 +195,18 @@ export default {
           }
         }
       }).catch(() => {
-        this.currentLyric = '暂无歌词 / 纯音乐，无歌词'
-        this.playingLiric = '暂无歌词 / 纯音乐，无歌词'
+        this.currentLyric = null
+        this.playingLiric = '暂无歌词'
         this.currentLineNum = 0
       })
     },
     handleLyric ({lineNum, txt}) {
       this.currentLineNum = lineNum
+      if (this.currentLineNum < this.currentLyric.lines.length) {
+        this.delayTime = (this.currentLyric.lines[this.currentLineNum + 1].time - this.currentLyric.lines[this.currentLineNum].time) / 1000
+      } else {
+        this.delayTime = 0
+      }
       if (lineNum > 5) {
         let line = this.$refs.lyricLine[lineNum - 5]
         this.$refs.scroll.scrollToElement(line, 1000)
@@ -282,10 +301,75 @@ export default {
         this.currentLyric.seek(0)
       }
     },
+    ready () {
+      this.songReady = true
+    },
+    error () {
+      this.songReady = true
+    },
+    changeMode () {
+      const mode = (this.playMode + 1) % 3
+      this.setPlayMode(mode)
+      let list = null
+      if (mode === this.playMode) {
+        list = shuffle(this.sequenceList)
+      } else {
+        list = this.sequenceList
+      }
+      this.resetCurrentIndex(list)
+      this.setPlaylist(list)
+    },
+    resetCurrentIndex (list, song) {
+      let index = list.findIndex(item => {
+        return item.id === this.currentSong.id
+      })
+      this.setCurrentIndex(index)
+    },
+    togglePlaying () {
+      if (!this.songReady) {
+        return
+      }
+      this.setPlayingState(!this.playing)
+
+      if (this.currentLyric) {
+        this.currentLyric.togglePlay()
+      }
+    },
+    back () {
+      this.setFullScreen(false)
+    },
+    open () {
+      this.setFullScreen(true)
+    },
     end () {
       if (this.playMode === playMode.single) {
         this.loop()
       } else {
+        this.nextSong()
+      }
+    },
+    middleTouchStart (e) {
+      this.touch.initiated = true
+      const touch = e.touches[0]
+      this.touch.startX = touch.pageX
+      this.touch.startY = touch.pageY
+    },
+    middleTouchMove (e) {
+      if (!this.touch.initiated) {
+        return
+      }
+      const touch = e.touches[0]
+      let deltaX = touch.pageX - this.touch.startX
+      let deltaY = touch.pageY - this.touch.startX
+      if (Math.abs(deltaY) > Math.abs(deltaX)) {
+        return
+      }
+      this.touch.percent = deltaX / window.innerWidth
+    },
+    middleTouchEnd () {
+      if (this.touch.percent > 0.5) {
+        this.prevSong()
+      } else if (this.touch.percent < -0.5) {
         this.nextSong()
       }
     },
@@ -325,50 +409,6 @@ export default {
     afterLeave () {
       this.$refs.cdWrapper.style.transition = ''
       this.$refs.cdWrapper.style['transform'] = ''
-    },
-    ready () {
-      this.songReady = true
-    },
-    error () {
-      this.songReady = true
-    },
-    disableBtn () {
-      return this.songReady ? '' : 'disable'
-    },
-    changeMode () {
-      const mode = (this.playMode + 1) % 3
-      this.setPlayMode(mode)
-      let list = null
-      if (mode === this.playMode) {
-        list = shuffle(this.sequenceList)
-      } else {
-        list = this.sequenceList
-      }
-      this.resetCurrentIndex(list)
-      this.setPlaylist(list)
-    },
-    resetCurrentIndex (list, song) {
-      let index = list.findIndex(item => {
-        return item.id === this.currentSong.id
-      })
-      this.setCurrentIndex(index)
-    },
-    togglePlaying () {
-      if (!this.songReady) {
-        return
-      }
-      this.setPlayingState(!this.playing)
-
-      if (this.currentLyric) {
-        this.currentLyric.togglePlay()
-      }
-    },
-    back () {
-      this.setFullScreen(false)
-    },
-    open () {
-      console.log(234)
-      this.setFullScreen(true)
     },
     _pad (num, n = 2) {
       let len = num.toString().length
@@ -485,13 +525,13 @@ export default {
               border-radius 50%
           .operators
             width 70%
-            margin 30% auto
+            margin 20% auto
             display flex
             text-align center
             .op-icon
               flex 1
               i
-                font-size 28px
+                font-size 2rem
       .normal-lyric
         position absolute
         top 3.5rem
@@ -513,7 +553,7 @@ export default {
               color #f00
       .normal-bottom
         position absolute
-        bottom 30px
+        bottom 2.5rem
         width 100%
         .progress-wrapper
           display flex
@@ -579,18 +619,18 @@ export default {
         overflow hidden
         .name
           margin-bottom 2px
-          no-wrap()
+          // no-wrap()
+          white-space nowrap
           font-size 16px
           color #222
+          // animation miniPlayerLyric 10s linear infinite
         .desc
           no-wrap()
           font-size 14px
           color #222
         .playing-lyric-wrapper
-            width 100%
-            overflow hidden
-            text-align left
             .playing-lyric
+              width 100%
               height 20px
               line-height 20px
               font-size 14px
@@ -614,6 +654,11 @@ export default {
       transform rotate(0)
     100%
       transform rotate(360deg)
+  @keyframes miniPlayerLyric
+    0%
+      transform translate(0%)
+    100%
+      transform translate(-100%)
   .triger
     transition all .8s
     transform-origin .48rem .476rem

@@ -2,11 +2,18 @@
  * @Author: Rainy
  * @Date: 2018-03-26 16:03:05
  * @Last Modified by: Rainy
- * @Last Modified time: 2018-08-01 21:10:18
+ * @Last Modified time: 2018-08-05 15:26:01
  */
 // 详见 https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi
 import axios from 'axios'
 import apiConfig from './config'
+
+export function getPlayUrl (id) {
+  let url = apiConfig.playUrl + '?id=' + id
+  return axios.get(url).then(res => {
+    return Promise.resolve(res)
+  })
+}
 
 // 获取轮播图数据
 export function getBanner () {

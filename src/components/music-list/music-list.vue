@@ -5,6 +5,7 @@
       <song-list
         @select="playSong"
         @playAll="playAll"
+        @changeTitle="changeTitle"
         :songs="songListDesc"
         :songList="songList"
         :collectNums="collectNums"
@@ -25,6 +26,7 @@ export default {
     return {
       songList: {},
       songListDesc: [],
+      currentListTitle: '',
       title: '歌单',
       description: '编辑推荐：',
       descShow: true,
@@ -49,20 +51,36 @@ export default {
         songs: this.songListDesc
       })
     },
+    changeTitle (listTitle) {
+      this.title = listTitle ? this.currentListTitle : '歌单'
+    },
     back () {
       this.$router.back()
     },
     normalizeSongs (songs) {
       return songs.map((song, index) => {
+        // this._getPlayUrl(song.id).then(res => {
+        //   song.songData = res.data[0]
+        //   song.playUrl = song.songData.url
+        // })
         song.singer = song.ar.map(item => item.name)[0]
         song.picUrl = song.al.picUrl
         song.playUrl = `http://music.163.com/song/media/outer/url?id=${song.id}.mp3`
       })
     },
+    // 第二种playurl的获取
+    // _getPlayUrl (id) {
+    //   return apiData.getPlayUrl(id).then(res => {
+    //     if (res.data.code === CODE_OK) {
+    //       return res.data
+    //     }
+    //   })
+    // },
     _getSongListDesc () {
       apiData.getSongListDesc(this.$route.query.id).then(res => {
         if (res.data.code === CODE_OK) {
           this.songList = res.data.playlist
+          this.currentListTitle = this.songList.name
           this.collectNums = this.songList.subscribedCount
           this.description += this.songList.description
           this.songListDesc = this.songList.tracks

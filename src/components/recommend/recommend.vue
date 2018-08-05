@@ -45,7 +45,7 @@
             <div class="list-content common-content">
               <ul>
                 <li @click="showSongList(item)" v-for="(item, index) in recommendMusicList" :key="index">
-                  <img :src="item.picUrl">
+                  <img v-lazy="item.picUrl">
                   <div class="list-play-count">
                     <i class="icon iconfont music-volume"></i>&nbsp;<span>{{listenCount(item.playCount)}}</span>
                   </div>
@@ -166,7 +166,7 @@ export default {
       } else if (playCount > 100000) {
         return `${(playCount / Math.pow(10, 4)).toFixed(2).slice(0, -1)}万`
       } else {
-        return `${playCount}`
+        return `${parseInt(playCount)}`
       }
     }
   },
