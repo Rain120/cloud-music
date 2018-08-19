@@ -10,5 +10,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
+  .broadcast
+    position fixed
+    top 5.5rem
+    bottom 0
+    width 100%
 </style>

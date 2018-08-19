@@ -68,15 +68,15 @@ export default {
     .slide-left-enter
       transform translate(100%)
     .slide-left-enter-active
-      transition all .3s
+      transition all .7s
     .slide-left-leave-active
       transform translate(-100%)
-      transition all .3s
+      transition all .7s
     .slide-right-enter
       transform translate(-100%)
     .slide-right-enter-active
-      transition all .3s
+      transition all .7s
     .slide-right-leave-active
       transform translate(100%)
-      transition all  .3s
+      transition all  .7s
 </style>

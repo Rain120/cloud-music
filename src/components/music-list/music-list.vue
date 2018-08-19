@@ -8,6 +8,8 @@
         @changeTitle="changeTitle"
         :songs="songListDesc"
         :songList="songList"
+        :listType="this.$route.params.title"
+        :title="this.$route.params.title"
         :collectNums="collectNums"
         :collectShow="collectShow"></song-list>
     </div>
@@ -27,7 +29,7 @@ export default {
       songList: {},
       songListDesc: [],
       currentListTitle: '',
-      title: '歌单',
+      title: this.$route.params.title,
       description: '编辑推荐：',
       descShow: true,
       collectNums: 0,
@@ -52,7 +54,7 @@ export default {
       })
     },
     changeTitle (listTitle) {
-      this.title = listTitle ? this.currentListTitle : '歌单'
+      this.title = listTitle ? this.currentListTitle : this.$route.params.title
     },
     back () {
       this.$router.back()

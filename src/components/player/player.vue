@@ -200,10 +200,15 @@ export default {
         this.currentLineNum = 0
       })
     },
+    currentLyricLine (index) {
+      return this.currentLyric.lines[index]
+    },
     handleLyric ({lineNum, txt}) {
       this.currentLineNum = lineNum
       if (this.currentLineNum < this.currentLyric.lines.length) {
-        this.delayTime = (this.currentLyric.lines[this.currentLineNum + 1].time - this.currentLyric.lines[this.currentLineNum].time) / 1000
+        if (this.currentLyricLine(this.currentLineNum + 1).time) {
+          this.delayTime = (this.currentLyricLine(this.currentLineNum + 1).time - this.currentLyricLine(this.currentLineNum).time) / 1000
+        }
       } else {
         this.delayTime = 0
       }
@@ -234,8 +239,8 @@ export default {
     },
     formatTime (time) {
       time = time | 0
-      const minutes = this._pad(time / 60 | 0)
-      const seconds = this._pad(time % 60)
+      const minutes = (time / 60 | 0).toString().padStart(2, '0')
+      const seconds = (time % 60).toString().padStart(2, '0')
       return `${minutes}:${seconds}`
     },
     updateTime (e) {
@@ -409,14 +414,6 @@ export default {
     afterLeave () {
       this.$refs.cdWrapper.style.transition = ''
       this.$refs.cdWrapper.style['transform'] = ''
-    },
-    _pad (num, n = 2) {
-      let len = num.toString().length
-      while (len < n) {
-        num = '0' + num
-        len++
-      }
-      return num
     },
     _getPosAndScale () {
       const targetWidth = 40

@@ -2,18 +2,21 @@
   <transition name="slide">
     <div class="new-song">
       <back-header :title="title" :description="description" :descShow="descShow" @back="back" />
+      <song-list></song-list>
     </div>
   </transition>
 </template>
 
 <script>
 import BackHeader from 'base/back-header/back-header'
+import SongList from 'base/song-list/song-list'
+
 export default {
   data () {
     return {
       songList: {},
       songListDesc: [],
-      title: '歌单',
+      title: this.$route.params.title,
       description: '编辑推荐：',
       descShow: true,
       collectNums: 0,
@@ -26,7 +29,8 @@ export default {
     }
   },
   components: {
-    BackHeader
+    BackHeader,
+    SongList
   }
 }
 </script>

@@ -8,28 +8,43 @@
       :data="songs"
       @scroll="scrollPos">
       <div>
-        <div class="songinfo">
-          <div class="list-img">
-            <img v-lazy="songList.coverImgUrl" />
+        <div class="song-list-header">
+          <div class="songinfo">
+            <div class="list-img">
+              <img v-lazy="songList.coverImgUrl" />
+            </div>
+            <div class="list-desc">
+              <div class="list-name">{{songList.name}}</div>
+              <div class="list-info">
+                <div class="song-list-user" v-if="listType === '歌单' && songList.creator">
+                  <img class="avatar" v-lazy="songList.creator.avatarUrl"/>
+                  <span class="nickname">{{songList.creator.nickname}}</span>
+                  <i class="icon iconfont music-arrow-right"></i>
+                </div>
+                <div class="album" v-else>
+                  <p class="singer">歌手: Rainy</p>
+                  <p class="time">发行时间: 2018-08-19</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="list-desc">{{songList.name}}</div>
-        </div>
-        <div class="features">
-          <div class="commment-icon">
-            <i class="icon iconfont music-message"></i>
-            <p>{{songList.commentCount}}</p>
-          </div>
-          <div class="share-icon">
-            <i class="icon iconfont music-share"></i>
-            <p>{{songList.shareCount}}</p>
-          </div>
-          <div class="download-icon">
-            <i class="icon iconfont music-download"></i>
-            <p>下载</p>
-          </div>
-          <div class="checkmore-icon">
-            <i class="icon iconfont music-volume"></i>
-            <p>多选</p>
+          <div class="features">
+            <div class="commment-icon">
+              <i class="icon iconfont music-message"></i>
+              <p>{{songList.commentCount}}</p>
+            </div>
+            <div class="share-icon">
+              <i class="icon iconfont music-share"></i>
+              <p>{{songList.shareCount}}</p>
+            </div>
+            <div class="download-icon">
+              <i class="icon iconfont music-download"></i>
+              <p>下载</p>
+            </div>
+            <div class="checkmore-icon">
+              <i class="icon iconfont music-volume"></i>
+              <p>多选</p>
+            </div>
           </div>
         </div>
         <div class="songs">
@@ -99,6 +114,10 @@ export default {
         return []
       }
     },
+    listType: {
+      type: String,
+      default: ''
+    },
     collectNums: {
       type: Number
     },
@@ -157,32 +176,53 @@ export default {
     .scroll-wrapper
       height 100%
       overflow hidden
-      .songinfo
-        display flex
-        margin-top 20px
-        .list-img
-          width 40%
-          margin-left 0.6rem
-          img
-            float right
-            width 135px
-            height 135px
-            border-radius 3px
-        .list-desc
-          flex 1
-          font-size 20px
-          font-weight 500
-          padding 20px
-      .features
-        display flex
-        margin 10px
-        div
-          flex 1
-          text-align center
-        i
-          font-size 24px
-        p
-          padding-top 3px
+      .song-list-header
+        .songinfo
+          display flex
+          margin-top 20px
+          .list-img
+            width 40%
+            margin-left 0.6rem
+            img
+              float right
+              width 135px
+              height 135px
+              border-radius 3px
+          .list-desc
+            flex 1
+            .list-name
+              font-size 1.3rem
+              font-weight 500
+              padding 0.8rem
+            .list-info
+              padding-left 0.5rem
+              .song-list-user
+                .avatar
+                  width 2rem
+                  height 2rem
+                  display inline-block
+                  vertical-align middle
+                  border-radius 50%
+                .nickname
+                  display inline-block
+                  vertical-align middle
+                  padding 0 .5rem
+            .album
+              .singer
+                font-size 1.2rem
+              .time
+                font-size 1rem
+                padding .4rem 0
+        .features
+          display flex
+          margin 10px
+          div
+            flex 1
+            text-align center
+          i
+            font-size 24px
+          p
+            padding-top 3px
       .songs
         height 100%
         border 1px solid rgba(180, 180, 180, .1)

@@ -22,7 +22,8 @@ let apiConfig = {
   singerAlbum: `${url}/artist/album`,
   singerMusic: `${url}/artists`,
   singerDesc: `${url}/artist/desc`,
-  songListDesc: `${url}/playlist/detail`
+  songListDesc: `${url}/playlist/detail`,
+  newAlbum: `${url}/top/album`
 }
 
 export default apiConfig

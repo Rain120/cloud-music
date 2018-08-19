@@ -41,7 +41,7 @@
           </div>
         </div>
         <div class="recommend-music-list common">
-          <div class="title">推荐歌单<i class="icon iconfont music-arrow-right"></i></div>
+          <div class="title" @click="showAllSongList">推荐歌单<i class="icon iconfont music-arrow-right"></i></div>
             <div class="list-content common-content">
               <ul>
                 <li @click="showSongList(item)" v-for="(item, index) in recommendMusicList" :key="index">
@@ -55,7 +55,7 @@
             </div>
         </div>
         <div class="recommend-new-music common">
-          <div class="title">最新音乐<i class="icon iconfont music-arrow-right"></i></div>
+          <div class="title" @click="showAllNewSong">最新音乐<i class="icon iconfont music-arrow-right"></i></div>
           <div class="new-song-content common-content">
               <ul>
                 <li  @click="showNewSong(song)" v-for="(song, index) in recommendNewSong" :key="index">
@@ -67,7 +67,7 @@
         </div>
         <div class="recommend-dj-program common">
           <router-link to="/index/broadcast">
-            <div class="title">主播电台<i class="icon iconfont music-arrow-right"></i></div>
+            <div class="title" @click="showAllBroadcast">主播电台<i class="icon iconfont music-arrow-right"></i></div>
           </router-link>
           <div class="dj-program-content common-content">
               <ul>
@@ -108,12 +108,57 @@ export default {
     this._getMusicList()
     this._getNewSong()
     this._getDjProgram()
+    apiData.getNewAlbum().then(res => {
+      console.log(res)
+    })
   },
   methods: {
     handlePlaylist (playList) {
       const bottom = playList.length > 0 ? '60px' : ''
       this.$refs.recommend.style.bottom = bottom
       this.$refs.scroll.refresh()
+    },
+    showAllSongList () {
+      console.log('showAllSongList')
+    },
+    showAllNewSong () {
+      console.log('showAllNewSong')
+    },
+    showAllBroadcast () {
+      this.$router.push({
+        name: 'broadcast'
+      })
+    },
+    showSongList (song) {
+      this.$router.push({
+        name: 'MusicList',
+        params: {
+          title: '歌单'
+        },
+        query: {
+          id: song.id
+        }
+      })
+    },
+    showNewSong (song) {
+      this.$router.push({
+        name: 'NewSong',
+        params: {
+          title: '专辑'
+        },
+        query: {
+          id: song.id
+        }
+      })
+    },
+    listenCount (playCount) {
+      if (playCount > Math.pow(10, 8)) {
+        return `${(playCount / Math.pow(10, 8)).toFixed(2).slice(0, -1)}亿`
+      } else if (playCount > 100000) {
+        return `${(playCount / Math.pow(10, 4)).toFixed(2).slice(0, -1)}万`
+      } else {
+        return `${parseInt(playCount)}`
+      }
     },
     _getBanner () {
       apiData.getBanner().then(res => {
@@ -131,6 +176,7 @@ export default {
     _getNewSong () {
       apiData.getNewSong().then(res => {
         if (res.data.code === CODE_OK) {
+          console.log(res.data)
           res.data.result.slice(0, 6).forEach(item => {
             this.recommendNewSong.push(item.song)
           })
@@ -143,31 +189,6 @@ export default {
           this.recommendDjProgram = res.data.result
         }
       })
-    },
-    showSongList (song) {
-      this.$router.push({
-        name: 'MusicList',
-        query: {
-          id: song.id
-        }
-      })
-    },
-    showNewSong (song) {
-      this.$router.push({
-        name: 'NewSong',
-        query: {
-          id: song.id
-        }
-      })
-    },
-    listenCount (playCount) {
-      if (playCount > Math.pow(10, 8)) {
-        return `${(playCount / Math.pow(10, 8)).toFixed(2).slice(0, -1)}亿`
-      } else if (playCount > 100000) {
-        return `${(playCount / Math.pow(10, 4)).toFixed(2).slice(0, -1)}万`
-      } else {
-        return `${parseInt(playCount)}`
-      }
     }
   },
   components: {
@@ -269,4 +290,5 @@ export default {
               right 6px
               & > span, & > i
                 font-size 14px
-</style>
+    // .recommend-new-music
+    //   .</style>

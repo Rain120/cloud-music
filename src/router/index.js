@@ -13,18 +13,19 @@ export default new Router({
       children: [
         {
           path: 'recommend',
+          name: 'recommend',
           component: () => import('components/recommend/recommend'),
           meta: {
             tab: 1
           },
           children: [
             {
-              path: '/recommend/music-list',
+              path: '/music-list',
               name: 'MusicList',
               component: () => import('components/music-list/music-list')
             },
             {
-              path: '/recommend/new-song',
+              path: '/new-song',
               name: 'NewSong',
               component: () => import('components/new-song/new-song')
             }
@@ -32,6 +33,7 @@ export default new Router({
         },
         {
           path: 'my-friend',
+          name: 'my-friend',
           component: () => import('components/my-friend/my-friend'),
           meta: {
             tab: 2
@@ -39,6 +41,7 @@ export default new Router({
         },
         {
           path: 'broadcast',
+          name: 'broadcast',
           component: () => import('components/broadcast/broadcast'),
           meta: {
             tab: 3
