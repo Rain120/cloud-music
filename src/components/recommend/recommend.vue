@@ -27,7 +27,7 @@
             </div>
             <p class="description">每日推荐</p>
           </div>
-          <div class="tab">
+          <div class="tab" @click="showAllSongLists">
             <div class="icon-wrapper">
               <i class="icon iconfont music-songs"></i>
             </div>
@@ -41,7 +41,7 @@
           </div>
         </div>
         <div class="recommend-music-list common">
-          <div class="title" @click="showAllSongList">推荐歌单<i class="icon iconfont music-arrow-right"></i></div>
+          <div class="title" @click="showAllSongLists">推荐歌单<i class="icon iconfont music-arrow-right"></i></div>
             <div class="list-content common-content">
               <ul>
                 <li @click="showSongList(item)" v-for="(item, index) in recommendMusicList" :key="index">
@@ -118,8 +118,13 @@ export default {
       this.$refs.recommend.style.bottom = bottom
       this.$refs.scroll.refresh()
     },
-    showAllSongList () {
-      console.log('showAllSongList')
+    showAllSongLists () {
+      this.$router.push({
+        name: 'AllSongLists',
+        params: {
+          title: '歌单'
+        }
+      })
     },
     showAllNewSong () {
       console.log('showAllNewSong')
@@ -176,7 +181,6 @@ export default {
     _getNewSong () {
       apiData.getNewSong().then(res => {
         if (res.data.code === CODE_OK) {
-          console.log(res.data)
           res.data.result.slice(0, 6).forEach(item => {
             this.recommendNewSong.push(item.song)
           })
@@ -211,6 +215,7 @@ export default {
     overflow hidden
     .tabs
       height 5rem
+      padding-top .3rem
       display flex
       border-thin(#a0a0a0)
       .tab
@@ -219,7 +224,7 @@ export default {
         .icon-wrapper
           width 2.5rem
           height 2.5rem
-          margin 7px auto
+          margin 0.5rem auto
           border-radius 50%
           border 1.5px solid #d33a31
           position relative

@@ -2,7 +2,7 @@
  * @Author: Rainy
  * @Date: 2018-03-26 16:03:05
  * @Last Modified by: Rainy
- * @Last Modified time: 2018-08-19 21:43:02
+ * @Last Modified time: 2018-08-20 23:48:48
  */
 // 详见 https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi
 import axios from 'axios'
@@ -193,7 +193,24 @@ export function getTopMV (limit = 30, offset = 0) {
 
 // 最新专辑
 export function getNewAlbum (limit = 30, offset = 0) {
-  let url = apiConfig.newAlbum + `?limit=${limit}&offset=${offset}`
+  // let url = apiConfig.newAlbum + `?limit=${limit}&offset=${offset}`
+  let url = apiConfig.newAlbum
+  return axios.get(url).then(res => {
+    return Promise.resolve(res)
+  })
+}
+
+// 最新专辑
+export function getPlayList () {
+  let url = apiConfig.playList
+  return axios.get(url).then(res => {
+    return Promise.resolve(res)
+  })
+}
+
+// 歌单分类
+export function getCategoryList () {
+  let url = apiConfig.categoryList
   return axios.get(url).then(res => {
     return Promise.resolve(res)
   })

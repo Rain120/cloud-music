@@ -10,10 +10,10 @@
           <p v-show="descShow" class="description">{{description}}</p>
         </div>
       </div>
-      <div class="search">
+      <div class="search" v-show="!songListsHeader">
         <i class="icon iconfont music-search"></i>
       </div>
-      <div class="more">
+      <div class="more" v-show="!songListsHeader">
         <i class="icon iconfont music-more"></i>
       </div>
     </div>
@@ -41,6 +41,10 @@ export default {
       default: ''
     },
     descShow: {
+      type: Boolean,
+      default: false
+    },
+    songListsHeader: {
       type: Boolean,
       default: false
     },
@@ -94,12 +98,17 @@ export default {
         i
           font-size 30px
           margin-left 20%
+      .search
+        padding-left 1rem
+      .more
+        padding-left 1rem
       .subtitle, .song-desc
         font-size 0
         .title, .song-name
           font-size 19px
           no-wrap()
         .nodesc
+          padding-left .8rem
           font-size 20px
           display inline-block
           line-height 31px

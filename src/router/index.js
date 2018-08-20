@@ -50,6 +50,11 @@ export default new Router({
       ]
     },
     {
+      path: '/all-song-lists',
+      name: 'AllSongLists',
+      component: () => import('components/all-song-lists/all-song-lists')
+    },
+    {
       path: '/',
       redirect: '/index/recommend'
     }
