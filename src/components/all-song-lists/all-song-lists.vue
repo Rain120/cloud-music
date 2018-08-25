@@ -1,7 +1,12 @@
 <template>
-  <div class="all-song-lists">
-    <back-header :title="title" :songListsHeader="songListsHeader" :descShow="descShow" @back="back" />
-  </div>
+  <transition name="slide">
+    <div class="all-song-lists">
+      <back-header
+      :title="title"
+      :songListsHeader="songListsHeader"
+      :descShow="descShow"/>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -22,9 +27,6 @@ export default {
     this._getPlayList()
   },
   methods: {
-    back () {
-      this.$router.back()
-    },
     _getPlayList () {
       apiData.getPlayList().then(res => {
         if (res.status === CODE_OK) {

@@ -33,7 +33,7 @@ export default new Router({
         },
         {
           path: 'my-friend',
-          name: 'my-friend',
+          name: 'MyFriend',
           component: () => import('components/my-friend/my-friend'),
           meta: {
             tab: 2
@@ -41,7 +41,7 @@ export default new Router({
         },
         {
           path: 'broadcast',
-          name: 'broadcast',
+          name: 'Broadcast',
           component: () => import('components/broadcast/broadcast'),
           meta: {
             tab: 3

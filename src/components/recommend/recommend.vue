@@ -111,7 +111,7 @@ export default {
     this._getNewSong()
     this._getDjProgram()
     apiData.getNewAlbum().then(res => {
-      console.log(res)
+      console.log('getNewAlbum', res)
     })
   },
   computed: {
@@ -141,14 +141,6 @@ export default {
         }
       })
     },
-    showAllNewSong () {
-      console.log('showAllNewSong')
-    },
-    showAllBroadcast () {
-      this.$router.push({
-        name: 'broadcast'
-      })
-    },
     showSongList (song) {
       this.$router.push({
         name: 'MusicList',
@@ -169,6 +161,14 @@ export default {
         query: {
           id: song.id
         }
+      })
+    },
+    showAllNewSong () {
+      console.log('showAllNewSong')
+    },
+    showAllBroadcast () {
+      this.$router.push({
+        name: 'Broadcast'
       })
     },
     listenCount (playCount) {
