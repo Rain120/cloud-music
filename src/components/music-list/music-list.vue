@@ -1,7 +1,10 @@
 <template>
   <transition name="slide">
     <div class="music-list">
-      <back-header :title="title" :description="description" :descShow="descShow" @back="back" />
+      <back-header
+      :title="title"
+      :description="description"
+      :descShow="descShow"/>
       <song-list
         @select="playSong"
         @playAll="playAll"
@@ -11,7 +14,45 @@
         :listType="this.$route.params.title"
         :title="this.$route.params.title"
         :collectNums="collectNums"
-        :collectShow="collectShow"></song-list>
+        :collectShow="collectShow">
+          <div slot="header" class="header-slot">
+            <div class="song-list-header">
+              <div class="songinfo">
+                <div class="list-img">
+                  <img v-lazy="songList.coverImgUrl" />
+                </div>
+                <div class="list-desc">
+                  <div class="list-name">{{songList.name}}</div>
+                  <div class="list-info">
+                    <div class="song-list-user" v-if="songList.creator">
+                      <img class="avatar" v-lazy="songList.creator.avatarUrl"/>
+                      <span class="nickname">{{songList.creator.nickname}}</span>
+                      <i class="icon iconfont music-arrow-right"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="features">
+                <div class="commment-icon">
+                  <i class="icon iconfont music-message"></i>
+                  <p>{{songList.commentCount}}</p>
+                </div>
+                <div class="share-icon">
+                  <i class="icon iconfont music-share"></i>
+                  <p>{{songList.shareCount}}</p>
+                </div>
+                <div class="download-icon">
+                  <i class="icon iconfont music-download"></i>
+                  <p>下载</p>
+                </div>
+                <div class="checkmore-icon">
+                  <i class="icon iconfont music-volume"></i>
+                  <p>多选</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </song-list>
     </div>
   </transition>
 </template>
@@ -36,7 +77,7 @@ export default {
       collectShow: true
     }
   },
-  mounted () {
+  created () {
     this.$nextTick(() => {
       this._getSongListDesc()
     })
@@ -55,9 +96,6 @@ export default {
     },
     changeTitle (listTitle) {
       this.title = listTitle ? this.currentListTitle : this.$route.params.title
-    },
-    back () {
-      this.$router.back()
     },
     normalizeSongs (songs) {
       return songs.map((song, index) => {
@@ -103,15 +141,64 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  .slide-enter-active, .slide-leave-active
-    transition all 0.3s
-  .slide-enter, .slide-leave-to
-    transform translate3d(100%, 0, 0)
-  .music-list
-    position fixed
-    top 0
-    left 0
-    bottom 0
-    right 0
-    background #fff
+.slide-enter-active, .slide-leave-active
+  transition all 0.5s
+
+.slide-enter, .slide-leave-to
+  transform translate3d(100%, 0, 0)
+
+.music-list
+  position fixed
+  top 0
+  left 0
+  bottom 0
+  right 0
+  background #fff
+  .header-slot
+    .song-list-header
+      .songinfo
+        display flex
+        .list-img
+          width 40%
+          margin-left 0.6rem
+          img
+            float right
+            width 10rem
+            height 10rem
+            border-radius 3px
+        .list-desc
+          flex 1
+          .list-name
+            font-size 1.3rem
+            font-weight 500
+            padding 0.8rem
+          .list-info
+            padding-left 0.5rem
+            .song-list-user
+              .avatar
+                width 2rem
+                height 2rem
+                display inline-block
+                vertical-align middle
+                border-radius 50%
+              .nickname
+                display inline-block
+                vertical-align middle
+                padding 0 .5rem
+          .album
+            .singer
+              font-size 1.2rem
+            .time
+              font-size 1rem
+              padding .4rem 0
+      .features
+        display flex
+        margin 10px
+        div
+          flex 1
+          text-align center
+        i
+          font-size 24px
+        p
+          padding-top 3px
 </style>

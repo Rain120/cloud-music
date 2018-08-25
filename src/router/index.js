@@ -55,6 +55,11 @@ export default new Router({
       component: () => import('components/all-song-lists/all-song-lists')
     },
     {
+      path: '/ranks',
+      name: 'Ranks',
+      component: () => import('components/ranks/ranks')
+    },
+    {
       path: '/',
       redirect: '/index/recommend'
     }

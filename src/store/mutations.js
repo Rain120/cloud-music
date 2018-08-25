@@ -1,6 +1,9 @@
 import * as types from './mutation-types'
 
 const mutations = {
+  [types.SET_CURRENT_REFRESH_TIME] (state, payload) {
+    state.playing = payload
+  },
   [types.SET_PLAYING_STATE] (state, payload) {
     state.playing = payload
   },

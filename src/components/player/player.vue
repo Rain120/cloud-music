@@ -10,7 +10,11 @@
         <div class="background">
           <img width="100%" height="100%" :src="currentSong.picUrl">
         </div>
-        <back-header :singer="currentSong.singer" :songName="currentSong.name" :player="player" @back="back"></back-header>
+        <back-header
+        :singer="currentSong.singer"
+        :songName="currentSong.name"
+        :player="player"
+        @back="back"></back-header>
         <div class="normal-top" ref="topCdWrapper" @click="showLyric">
           <div class="top-wrapper">
             <div class="triger" :class="{'triger-paused': !playing}">

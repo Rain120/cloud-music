@@ -33,7 +33,7 @@
             </div>
             <p class="description">歌单</p>
           </div>
-          <div class="tab">
+          <div class="tab" @click="showRank">
             <div class="icon-wrapper">
               <i class="icon iconfont music-rank"></i>
             </div>
@@ -87,9 +87,11 @@
 <script>
 import Slider from 'base/slider/slider'
 import Scroll from 'base/scroll/scroll'
+import { mapGetters } from 'vuex'
 import { playlistMixin } from 'common/js/mixin'
 import * as apiData from 'api/data'
 import { CODE_OK } from 'common/js/config'
+// import { shuffle } from 'common/js/util'
 
 export default {
   mixins: [playlistMixin],
@@ -112,11 +114,24 @@ export default {
       console.log(res)
     })
   },
+  computed: {
+    ...mapGetters([
+      'currentRefreshTime'
+    ])
+  },
   methods: {
     handlePlaylist (playList) {
       const bottom = playList.length > 0 ? '60px' : ''
       this.$refs.recommend.style.bottom = bottom
       this.$refs.scroll.refresh()
+    },
+    showRank () {
+      this.$router.push({
+        name: 'Ranks',
+        params: {
+          title: '排行榜'
+        }
+      })
     },
     showAllSongLists () {
       this.$router.push({
@@ -230,7 +245,7 @@ export default {
           position relative
           .date
             position absolute
-            top 16px
+            top 15px
             left 0px
             right 0
             bottom 0

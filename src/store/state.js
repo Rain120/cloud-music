@@ -1,6 +1,7 @@
 import { playMode } from 'common/js/config'
 
 const state = {
+  currentRefreshTime: 0,
   playing: false,
   fullScreen: false,
   playList: [],
