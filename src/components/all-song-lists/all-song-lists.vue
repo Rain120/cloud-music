@@ -6,11 +6,15 @@
       :songListsHeader="songListsHeader"
       :descShow="descShow"/>
     </div>
+    <div class="loading-container">
+      <loading></loading>
+    </div>
   </transition>
 </template>
 
 <script>
 import BackHeader from 'base/back-header/back-header'
+import Loading from 'base/loading/loading'
 import * as apiData from 'api/data'
 import { CODE_OK } from 'common/js/config'
 
@@ -43,7 +47,8 @@ export default {
     }
   },
   components: {
-    BackHeader
+    BackHeader,
+    Loading
   }
 }
 </script>
@@ -61,4 +66,9 @@ export default {
     bottom: 0
     right: 0
     background #fff
+  .loading-container
+    position absolute
+    width 100%
+    top 50%
+    transform translateY(-50%)
 </style>

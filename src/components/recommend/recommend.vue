@@ -1,6 +1,9 @@
 <template>
   <div class="recommend" ref="recommend">
-    <scroll class="recommend-wrapper" ref="scroll" :data="recommendMusicLists">
+    <scroll
+      class="recommend-wrapper"
+      ref="scroll"
+      :data="recommendMusicLists">
       <div>
         <div class="sliders">
           <div class="slider-wrapper" v-if="banners.length > 0">
@@ -80,6 +83,9 @@
         </div>
       </div>
     </scroll>
+    <div class="loading-container" v-show="!recommendMusicLists.length">
+      <loading></loading>
+    </div>
     <router-view></router-view>
   </div>
 </template>
@@ -87,6 +93,7 @@
 <script>
 import Slider from 'base/slider/slider'
 import Scroll from 'base/scroll/scroll'
+import Loading from 'base/loading/loading'
 import { mapGetters } from 'vuex'
 import { playlistMixin } from 'common/js/mixin'
 import * as apiData from 'api/data'
@@ -212,103 +219,108 @@ export default {
   },
   components: {
     Slider,
-    Scroll
+    Scroll,
+    Loading
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-@import "~common/stylus/mixin"
+  @import "~common/stylus/mixin"
 
-.recommend
-  position fixed
-  top 5.5rem
-  bottom 0
-  width 100%
-  .recommend-wrapper
-    height 100%
-    overflow hidden
-    .tabs
-      height 5rem
-      padding-top .3rem
-      display flex
-      border-thin(#a0a0a0)
-      .tab
-        width 25%
-        text-align center
-        .icon-wrapper
-          width 2.5rem
-          height 2.5rem
-          margin 0.5rem auto
-          border-radius 50%
-          border 1.5px solid #d33a31
-          position relative
-          .date
-            position absolute
-            top 15px
-            left 0px
-            right 0
-            bottom 0
-            text-align center
-            color #d33a31
-            font-size 16px
-          .icon
-            font-size 27px
-            line-height 2.5rem
-            color #d33a31
-        .description
-          color #303131
-          font-size 13px
-
-    .common
-      margin-bottom 0.6rem
-      .title
-        height 30px
-        line-height 30px
-        font-size 18px
-        font-weight 600
-        text-indent 5px
-        margin 10px 0 10px 5px
-        color #303131
-        &.icon
-          color #919293
-      .common-content
-        height 100%
-        width 100%
-        overflow hidden
-        ul
-          display grid
-          grid-template-columns repeat(3, 1fr)
-          li
-            margin-bottom 0.5rem
-            box-sizing border-box
+  .recommend
+    position fixed
+    top 5.5rem
+    bottom 0
+    width 100%
+    .recommend-wrapper
+      height 100%
+      overflow hidden
+      .tabs
+        height 5rem
+        padding-top .3rem
+        display flex
+        border-thin(#a0a0a0)
+        .tab
+          width 25%
+          text-align center
+          .icon-wrapper
+            width 2.5rem
+            height 2.5rem
+            margin 0.5rem auto
+            border-radius 50%
+            border 1.5px solid #d33a31
             position relative
-            img
-              height 137px
-              width 100%
-              border-radius 3px
-            .name
-              line-height 20px
-              font-size 14px
-              no-wrap-nums(2)
-          li:nth-child(3n+2)
-            padding 0 1.5px
-          li:nth-child(3n+1)
-            padding-left 3px
-          li:nth-child(3n)
-            padding-right 3px
-
-    .recommend-music-list
-      .list-content
-        ul
-          li
-            .list-play-count
-              text-align center
-              color #fff
+            .date
               position absolute
-              top 5px
-              right 6px
-              & > span, & > i
+              top 15px
+              left 0px
+              right 0
+              bottom 0
+              text-align center
+              color #d33a31
+              font-size 16px
+            .icon
+              font-size 27px
+              line-height 2.5rem
+              color #d33a31
+          .description
+            color #303131
+            font-size 13px
+
+      .common
+        margin-bottom 0.6rem
+        .title
+          height 30px
+          line-height 30px
+          font-size 18px
+          font-weight 600
+          text-indent 5px
+          margin 10px 0 10px 5px
+          color #303131
+          &.icon
+            color #919293
+        .common-content
+          height 100%
+          width 100%
+          overflow hidden
+          ul
+            display grid
+            grid-template-columns repeat(3, 1fr)
+            li
+              margin-bottom 0.5rem
+              box-sizing border-box
+              position relative
+              img
+                height 137px
+                width 100%
+                border-radius 3px
+              .name
+                line-height 20px
                 font-size 14px
-    // .recommend-new-music
-    //   .</style>
+                no-wrap-nums(2)
+            li:nth-child(3n+2)
+              padding 0 1.5px
+            li:nth-child(3n+1)
+              padding-left 3px
+            li:nth-child(3n)
+              padding-right 3px
+
+      .recommend-music-list
+        .list-content
+          ul
+            li
+              .list-play-count
+                text-align center
+                color #fff
+                position absolute
+                top 5px
+                right 6px
+                & > span, & > i
+                  font-size 14px
+  .loading-container
+    position absolute
+    width 100%
+    top 50%
+    transform translateY(-50%)
+</style>

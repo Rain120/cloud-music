@@ -19,8 +19,11 @@ export default {
   .loading
     width 100%
     text-align center
+    img
+      position relative
+      left -.3rem
     .desc
       line-height 20px
       font-size 12px
-      color rgba(255, 255, 255, 0.5)
+      color rgba(0, 0, 0, 0.5)
 </style>

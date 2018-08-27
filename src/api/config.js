@@ -1,4 +1,5 @@
-let url = 'http://localhost:3000'
+let url = `http://localhost:3000`
+// let url = `https://api.imjad.cn/cloudmusic`
 
 let apiConfig = {
   playUrl: `${url}/music/url`,

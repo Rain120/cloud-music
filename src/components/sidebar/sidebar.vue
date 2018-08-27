@@ -50,7 +50,7 @@ export default {
       z-index 40
       width 60%
       height 100%
-      background-color rgba(255, 255, 255, 0.6)
+      background-color rgba(0, 0, 0, 0.2)
       // background-color #222222
       color #ffffff
       transform translate3d(0, 0, 0)
@@ -71,6 +71,8 @@ export default {
         text-align center
         margin-top 20px
         font-size 16px
+        a
+          color #fff
     .mask
       position fixed
       top 0

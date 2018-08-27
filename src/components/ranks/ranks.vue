@@ -7,6 +7,7 @@
       :descShow="descShow"/>
       <scroll
       class="rank-scroll-wrapper"
+      v-show="globalRankLists.length && officialRankLists.length"
       ref="scroll"
       :data="globalRankLists">
         <div>
@@ -23,7 +24,7 @@
                     <ul>
                       <li v-for="(item, index) in rank.data.playlist.tracks.slice(0, 3)"
                         :key="index">
-                        <p>getRankList(item, index)</p>
+                        <p>{{item}}{{getRankList(item, index)}}</p>
                       </li>
                     </ul>
                   </div>
@@ -43,15 +44,19 @@
           </div>
         </div>
       </scroll>
+      <div class="loading-container" v-show="!globalRankLists.length  || !officialRankLists.length">
+        <loading></loading>
+      </div>
     </div>
   </transition>
 </template>
 
 <script>
 import Scroll from 'base/scroll/scroll'
+import Loading from 'base/loading/loading'
 import BackHeader from 'base/back-header/back-header'
 import * as apiData from 'api/data'
-import { CODE_OK } from 'common/js/config'
+// import { CODE_OK } from 'common/js/config'
 export default {
   data () {
     return {
@@ -81,12 +86,11 @@ export default {
     _getRankList () {
       for (let index = 0; index <= 23; index++) {
         apiData.getRankList(index).then(res => {
-          if (res.code === CODE_OK) {
-            if (index < 4) {
-              this.officialRankLists.push(res)
-            } else {
-              this.globalRankLists.push(res)
-            }
+          console.log(res)
+          if (index < 4) {
+            this.officialRankLists.push(res)
+          } else {
+            this.globalRankLists.push(res)
           }
         })
       }
@@ -94,7 +98,8 @@ export default {
   },
   components: {
     Scroll,
-    BackHeader
+    BackHeader,
+    Loading
   }
 }
 </script>
@@ -156,4 +161,9 @@ export default {
             padding-left 3px
           li:nth-child(3n)
             padding-right 3px
+  .loading-container
+    position absolute
+    width 100%
+    top 50%
+    transform translateY(-50%)
 </style>
