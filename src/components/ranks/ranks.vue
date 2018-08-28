@@ -9,7 +9,7 @@
       class="rank-scroll-wrapper"
       v-show="globalRankLists.length && officialRankLists.length"
       ref="scroll"
-      :data="globalRankLists">
+      :data="officialRankLists.concat(globalRankLists)">
         <div>
           <div class="offical-rank">
             <p class="title">官方榜</p>
@@ -24,7 +24,7 @@
                     <ul>
                       <li v-for="(item, index) in rank.data.playlist.tracks.slice(0, 3)"
                         :key="index">
-                        <p>{{item}}{{getRankList(item, index)}}</p>
+                        <p>{{getRankList (item, index)}}</p>
                       </li>
                     </ul>
                   </div>
@@ -35,7 +35,7 @@
           <div class="global-rank">
             <p class="title">全球榜</p>
             <ul>
-              <li v-for="(item, index) in officialRankLists"
+              <li v-for="(item, index) in globalRankLists"
                 :key="index">
                   <img v-lazy="item.data.playlist.coverImgUrl" />
                   <p class="name">{{item.data.playlist.name}}</p>
@@ -69,11 +69,6 @@ export default {
       collectShow: true
     }
   },
-  computed: {
-    getRankList (item, index) {
-      return `${index}.${item.name} - ${item.ar[0].name}`
-    }
-  },
   created () {
     this._getRankList()
   },
@@ -83,13 +78,15 @@ export default {
     })
   },
   methods: {
+    getRankList (item, index) {
+      return `${index}.${item.name} - ${item.ar[0].name}`
+    },
     _getRankList () {
       for (let index = 0; index <= 23; index++) {
         apiData.getRankList(index).then(res => {
-          console.log(res)
           if (index < 4) {
             this.officialRankLists.push(res)
-          } else {
+          } else if (index >= 4 && index <= 23) {
             this.globalRankLists.push(res)
           }
         })
@@ -107,44 +104,39 @@ export default {
 <style lang="stylus" scoped>
   .slide-enter-active, .slide-leave-active
     transition: all 0.5s
-
   .slide-enter, .slide-leave-to
     transform translate3d(100%, 0, 0)
-
   .ranks
     position fixed
-    z-index 100
     top 0
-    left 0
     bottom 0
-    right 0
+    width 100%
     background #fff
     .rank-scroll-wrapper
       height 100%
       overflow hidden
       .title
-        padding .5rem 0 0 .5rem
+        padding .5rem 0 .4rem .5rem
         font-size 1.1rem
       .offical-rank
         .rank
           display flex
           .rank-left
             width 35%
-            margin .4rem
+            padding .12rem 0.26rem
             img
-              width 95%
-              height 95%
+              width 100%
+              height 100%
               border-radius .8rem
           .rank-right
             flex 1
             li
-              padding .8rem
+              padding .6rem
       .global-rank
         ul
           display grid
           grid-template-columns repeat(3, 1fr)
           li
-            margin-bottom 0.5rem
             box-sizing border-box
             position relative
             img
