@@ -199,7 +199,7 @@ export default {
           }
         }
       }).catch(() => {
-        this.currentLyric = null
+        this.currentLyric = '暂无歌词'
         this.playingLiric = '暂无歌词'
         this.currentLineNum = 0
       })

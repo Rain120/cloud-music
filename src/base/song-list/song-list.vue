@@ -5,7 +5,7 @@
       ref="scroll"
       :probeType="probeType"
       :listen-scroll="listenScroll"
-      :data="songs"
+      :data="songs.data"
       @scroll="scrollPos">
       <div>
         <slot name="header"></slot>
@@ -20,14 +20,14 @@
             <div class="collect" v-show="collectShow">{{collectNum()}}</div>
           </div>
           <ul>
-            <li class="song-desc" @click="selectItem(song, index)" v-for="(song, index) in songs" :key="index">
+            <li class="song-desc" @click="selectItem(song, index)" v-for="(song, index) in songs.data" :key="index">
               <div class="song-item">
                 <div class="order">{{index + 1}}</div>
                 <div class="song">
                   <div class="desc">
                     <p class="song-name">{{song.name}}</p>
                     <p class="info">
-                      <span class="singer">{{song.ar[0].name}}</span> - <span class="artist">{{song.name}}</span>
+                      <span class="singer">{{song.singer}}</span> - <span class="artist">{{song.album}}</span>
                     </p>
                   </div>
                 </div>
@@ -37,7 +37,7 @@
         </div>
       </div>
     </scroll>
-    <div class="loading-container" v-show="!songs.length">
+    <div class="loading-container" v-show="!songs.data.length">
       <loading></loading>
     </div>
   </div>
@@ -71,17 +71,14 @@ export default {
       }
     },
     songs: {
-      type: Array,
+      type: Object,
       default () {
-        return []
+        return {}
       }
     },
     listType: {
       type: String,
       default: ''
-    },
-    collectNums: {
-      type: Number
     },
     collectShow: {
       type: Boolean,
@@ -110,13 +107,13 @@ export default {
       this.$emit('select', song, index)
     },
     playNums () {
-      return `播放全部(共${this.songs.length})首`
+      return `播放全部(共${this.songs.data.length})首`
     },
     collectNum () {
       if (this.collectNums <= Math.pow(10, 5)) {
-        return ` + 收藏(${this.collectNums})`
+        return ` + 收藏(${this.songs.collectNums})`
       } else {
-        let cNum = (this.collectNums / Math.pow(10, 4)).toFixed(1)
+        let cNum = (this.songs.collectNums / Math.pow(10, 4)).toFixed(1)
         return ` + 收藏(${cNum}万)`
       }
     }

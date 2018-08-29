@@ -1,12 +1,24 @@
 export default class Song {
-  constructor ({id, mid, singer, name, album, duration, image, url, aliaName}) {
+  constructor ({id, singer, name, album, picUrl, playUrl}) {
     this.id = id
     this.singer = singer
     this.name = name
     this.album = album
-    this.aliaName = aliaName
-    this.image = image
+    this.picUrl = picUrl
+    this.playUrl = playUrl
   }
+}
+
+export function createSong (music) {
+  // console.log(music)
+  return new Song({
+    id: music.id,
+    singer: music.ar[0].name,
+    name: music.name,
+    album: music.al.name,
+    picUrl: music.al.picUrl,
+    playUrl: `http://music.163.com/song/media/outer/url?id=${music.id}.mp3`
+  })
 }
 
 function singerName (arr) {
@@ -24,7 +36,7 @@ export function createRecommendSong (music) {
     singer: singerName(music.song.artists),
     name: music.name,
     album: music.song.album.name,
-    image: music.song.album.picUrl
+    picUrl: music.song.album.picUrl
   })
 }
 
@@ -34,17 +46,7 @@ export function createRecommendListSong (music) {
     singer: singerName(music.artists),
     name: music.name,
     album: music.album.name,
-    image: music.album.picUrl
-  })
-}
-
-export function createSong (music) {
-  return new Song({
-    id: music.id,
-    singer: singerName(music.ar),
-    name: music.name,
-    album: music.al.name,
-    image: music.al.picUrl
+    picUrl: music.album.picUrl
   })
 }
 

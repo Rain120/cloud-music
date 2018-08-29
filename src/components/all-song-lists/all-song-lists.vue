@@ -1,13 +1,15 @@
 <template>
   <transition name="slide">
-    <div class="all-song-lists">
-      <back-header
-      :title="title"
-      :songListsHeader="songListsHeader"
-      :descShow="descShow"/>
-    </div>
-    <div class="loading-container">
-      <loading></loading>
+    <div class="all-song-list-wrapper">
+      <div class="all-song-lists">
+        <back-header
+        :title="title"
+        :songListsHeader="songListsHeader"
+        :descShow="descShow"/>
+      </div>
+      <div class="loading-container">
+        <loading></loading>
+      </div>
     </div>
   </transition>
 </template>
@@ -55,20 +57,20 @@ export default {
 
 <style lang="stylus" scoped>
   .slide-enter-active, .slide-leave-active
-    transition: all 0.5s
+    transition all 0.5s
   .slide-enter, .slide-leave-to
-    transform: translate3d(100%, 0, 0)
-  .all-song-lists
-    position: fixed
-    z-index: 100
-    top: 0
-    left: 0
-    bottom: 0
-    right: 0
-    background #fff
-  .loading-container
-    position absolute
-    width 100%
-    top 50%
-    transform translateY(-50%)
+    transform translate3d(100%, 0, 0)
+  .all-song-list-wrapper
+    .all-song-lists
+      position fixed
+      top 0
+      left 0
+      bottom 0
+      right 0
+      background #fff
+    .loading-container
+      position absolute
+      width 100%
+      top 50%
+      transform translateY(-50%)
 </style>

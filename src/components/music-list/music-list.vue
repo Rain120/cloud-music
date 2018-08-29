@@ -13,7 +13,6 @@
         :songList="songList"
         :listType="this.$route.params.title"
         :title="this.$route.params.title"
-        :collectNums="collectNums"
         :collectShow="collectShow">
           <div slot="header" class="header-slot">
             <div class="song-list-header">
@@ -62,18 +61,18 @@ import BackHeader from 'base/back-header/back-header'
 import SongList from 'base/song-list/song-list'
 import * as apiData from 'api/data'
 import { CODE_OK } from 'common/js/config'
+import { createSong } from 'common/js/song'
 import { mapActions } from 'vuex'
 
 export default {
   data () {
     return {
       songList: {},
-      songListDesc: [],
+      songListDesc: {},
       currentListTitle: '',
       title: this.$route.params.title,
       description: '编辑推荐：',
       descShow: true,
-      collectNums: 0,
       collectShow: true
     }
   },
@@ -85,28 +84,31 @@ export default {
   methods: {
     playSong (song, index) {
       this.selectPlay({
-        songs: this.songListDesc,
+        songs: this.songListDesc.data,
         index
       })
     },
     playAll () {
       this.randomPlay({
-        songs: this.songListDesc
+        songs: this.songListDesc.data
       })
     },
     changeTitle (listTitle) {
       this.title = listTitle ? this.currentListTitle : this.$route.params.title
     },
-    normalizeSongs (songs) {
-      return songs.map((song, index) => {
+    _normalizeSongs (songs) {
+      let ret = []
+      songs.map((song, index) => {
+        ret.push(createSong(song))
         // this._getPlayUrl(song.id).then(res => {
         //   song.songData = res.data[0]
         //   song.playUrl = song.songData.url
         // })
-        song.singer = song.ar.map(item => item.name)[0]
-        song.picUrl = song.al.picUrl
-        song.playUrl = `http://music.163.com/song/media/outer/url?id=${song.id}.mp3`
+        // song.singer = song.ar.map(item => item.name)[0]
+        // song.picUrl = song.al.picUrl
+        // song.playUrl = `http://music.163.com/song/media/outer/url?id=${song.id}.mp3`
       })
+      return ret
     },
     // 第二种playurl的获取
     // _getPlayUrl (id) {
@@ -121,10 +123,9 @@ export default {
         if (res.data.code === CODE_OK) {
           this.songList = res.data.playlist
           this.currentListTitle = this.songList.name
-          this.collectNums = this.songList.subscribedCount
           this.description += this.songList.description
-          this.songListDesc = this.songList.tracks
-          this.normalizeSongs(this.songListDesc)
+          this.songListDesc.data = this._normalizeSongs(this.songList.tracks)
+          this.songListDesc.collectNums = this.songList.subscribedCount
         }
       })
     },
@@ -175,6 +176,8 @@ export default {
           .list-info
             padding-left 0.5rem
             .song-list-user
+              position relative
+              bottom -2.5rem
               .avatar
                 width 2rem
                 height 2rem

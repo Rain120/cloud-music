@@ -6,10 +6,10 @@
       :songListsHeader="songListsHeader"
       :descShow="descShow"/>
       <scroll
-      class="rank-scroll-wrapper"
-      v-show="globalRankLists.length && officialRankLists.length"
-      ref="scroll"
-      :data="officialRankLists.concat(globalRankLists)">
+        class="rank-scroll-wrapper"
+        v-show="globalRankLists.length && officialRankLists.length"
+        ref="scroll"
+        :data="officialRankLists.concat(globalRankLists)">
         <div>
           <div class="offical-rank">
             <p class="title">官方榜</p>
@@ -109,6 +109,8 @@ export default {
   .ranks
     position fixed
     top 0
+    left 0
+    right 0
     bottom 0
     width 100%
     background #fff
@@ -116,17 +118,16 @@ export default {
       height 100%
       overflow hidden
       .title
-        padding .5rem 0 .4rem .5rem
         font-size 1.1rem
       .offical-rank
         .rank
           display flex
           .rank-left
             width 35%
-            padding .12rem 0.26rem
+            padding .2rem 0 0 .2rem
             img
-              width 100%
-              height 100%
+              width 95%
+              height 95%
               border-radius .8rem
           .rank-right
             flex 1
