@@ -8,14 +8,15 @@ function findIndex (list, song) {
   })
 }
 
-export const selectPlay = function ({ commit, state }, { songs, index }) {
-  commit(types.SET_SEQUENCE_LIST, songs)
+export const selectPlay = function ({ commit, state }, { song, index }) {
+  console.log(song)
+  commit(types.SET_SEQUENCE_LIST, song)
   if (state.playMode === playMode.shuffle) {
-    let randomList = shuffle(songs)
+    let randomList = shuffle(song)
     commit(types.SET_PLAYLIST, randomList)
-    index = findIndex(randomList, songs[index])
+    index = findIndex(randomList, song[index])
   } else {
-    commit(types.SET_PLAYLIST, songs)
+    commit(types.SET_PLAYLIST, song)
   }
   commit(types.SET_CURRENT_INDEX, index)
   commit(types.SET_FULL_SCREEN, true)

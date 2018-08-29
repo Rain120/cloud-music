@@ -84,7 +84,7 @@ export default {
   methods: {
     playSong (song, index) {
       this.selectPlay({
-        songs: this.songListDesc.data,
+        song: this.songListDesc.data,
         index
       })
     },
