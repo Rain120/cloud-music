@@ -86,6 +86,11 @@ export default {
     }
   },
   methods: {
+    handlePlaylist (playList) {
+      const bottom = playList.length > 0 ? '60px' : ''
+      this.$refs.list.style.bottom = bottom
+      this.$refs.scroll.refresh()
+    },
     scrollPos (pos) {
       let title = false
       if (pos.y < -240) {
@@ -94,11 +99,6 @@ export default {
         title = false
       }
       this.$emit('changeTitle', title)
-    },
-    handlePlaylist (playList) {
-      const bottom = playList.length > 0 ? '60px' : ''
-      this.$refs.list.style.bottom = bottom
-      this.$refs.scroll.refresh()
     },
     palyAll () {
       this.$emit('playAll')

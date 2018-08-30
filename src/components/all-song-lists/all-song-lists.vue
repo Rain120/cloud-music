@@ -5,7 +5,8 @@
         <back-header
         :title="title"
         :songListsHeader="songListsHeader"
-        :descShow="descShow"/>
+        :descShow="descShow"
+        @back="back"/>
       </div>
       <div class="loading-container">
         <loading></loading>
@@ -33,6 +34,9 @@ export default {
     this._getPlayList()
   },
   methods: {
+    back () {
+      this.$router.back()
+    },
     _getPlayList () {
       apiData.getPlayList().then(res => {
         if (res.status === CODE_OK) {

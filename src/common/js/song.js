@@ -1,11 +1,12 @@
 export default class Song {
-  constructor ({id, singer, name, album, picUrl, playUrl}) {
+  constructor ({id, singer, name, album, picUrl, playUrl, dt}) {
     this.id = id
     this.singer = singer
     this.name = name
     this.album = album
     this.picUrl = picUrl
     this.playUrl = playUrl
+    this.dt = dt
   }
 }
 
@@ -17,7 +18,8 @@ export function createSong (music) {
     name: music.name,
     album: music.al.name,
     picUrl: music.al.picUrl,
-    playUrl: `http://music.163.com/song/media/outer/url?id=${music.id}.mp3`
+    playUrl: `http://music.163.com/song/media/outer/url?id=${music.id}.mp3`,
+    dt: music.dt
   })
 }
 

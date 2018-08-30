@@ -4,7 +4,8 @@
       <back-header
       :title="title"
       :songListsHeader="songListsHeader"
-      :descShow="descShow"/>
+      :descShow="descShow"
+      @back="back"/>
       <scroll
         class="rank-scroll-wrapper"
         v-show="globalRankLists.length && officialRankLists.length"
@@ -81,16 +82,23 @@ export default {
     getRankList (item, index) {
       return `${index}.${item.name} - ${item.ar[0].name}`
     },
+    back () {
+      this.$router.back()
+    },
     _getRankList () {
+      let ranksRet = []
       for (let index = 0; index <= 23; index++) {
-        apiData.getRankList(index).then(res => {
+        ranksRet.push(Promise.resolve(apiData.getRankList(index)))
+      }
+      Promise.all(ranksRet).then(res => {
+        res.map((rank, index) => {
           if (index < 4) {
-            this.officialRankLists.push(res)
+            this.officialRankLists.push(rank)
           } else if (index >= 4 && index <= 23) {
-            this.globalRankLists.push(res)
+            this.globalRankLists.push(rank)
           }
         })
-      }
+      })
     }
   },
   components: {
