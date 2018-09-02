@@ -2,6 +2,10 @@
 
 > 自己在学习之余，尝试实现网易云音乐Android的APP
 
+自己做的一个网易云音乐移动版的结构图，后期会继续完善这个图，以及完善图上的功能
+
+![网易云音乐移动版架构](https://github.com/Rain120/cloud-music/blob/master/screenshot/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E7%A7%BB%E5%8A%A8%E7%89%88%E6%9E%B6%E6%9E%84.png)
+
 本项目建立在开源项目[NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)的基础上, 需要先在本地起server
 
 需要 NodeJS 6.0+ 环境，建议使用[NVM](https://github.com/coreybutler/nvm-windows/releases)进行node的版本管理
@@ -59,7 +63,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 1.  audio play pause状态切换时报错DOMException
 
-![player audio使用报错](./screenshot/player audio使用报错.png)
+![player audio使用报错](https://github.com/Rain120/cloud-music/blob/master/screenshot/player%20audio%E4%BD%BF%E7%94%A8%E6%8A%A5%E9%94%99.png)
 
 - 解决方案：因为play()请求被pause()调用中断，所以我们需要延时操作
 `this.$nextTick()` or `setTimeout(() => {}, timeout)`
