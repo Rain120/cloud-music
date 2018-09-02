@@ -49,11 +49,6 @@ import Loading from 'base/loading/loading'
 import { playlistMixin } from 'common/js/mixin'
 export default {
   mixins: [playlistMixin],
-  data () {
-    return {
-      songsnum: ''
-    }
-  },
   created () {
     this.probeType = 3
     this.listenScroll = true
@@ -64,12 +59,6 @@ export default {
     })
   },
   props: {
-    songList: {
-      type: Object,
-      default () {
-        return {}
-      }
-    },
     songs: {
       type: Object,
       default () {
@@ -88,6 +77,7 @@ export default {
   methods: {
     handlePlaylist (playList) {
       const bottom = playList.length > 0 ? '60px' : ''
+      console.log('dom 2', this.$refs.recommend, this.$refs.scroll)
       this.$refs.list.style.bottom = bottom
       this.$refs.scroll.refresh()
     },
@@ -129,7 +119,7 @@ export default {
   @import "~common/stylus/mixin"
   .song-list
     position absolute
-    top 52px
+    top 3.2rem
     bottom 0
     width 100%
     .scroll-wrapper

@@ -4,8 +4,7 @@
       <back-header
       :title="title"
       :songListsHeader="songListsHeader"
-      :descShow="descShow"
-      @back="back"/>
+      :descShow="descShow" />
       <scroll
         class="rank-scroll-wrapper"
         v-show="globalRankLists.length && officialRankLists.length"
@@ -82,9 +81,6 @@ export default {
     getRankList (item, index) {
       return `${index}.${item.name} - ${item.ar[0].name}`
     },
-    back () {
-      this.$router.back()
-    },
     _getRankList () {
       let ranksRet = []
       for (let index = 0; index <= 23; index++) {
@@ -118,15 +114,18 @@ export default {
     position fixed
     top 0
     left 0
-    right 0
     bottom 0
-    width 100%
+    right 0
     background #fff
     .rank-scroll-wrapper
-      height 100%
+      position absolute
+      top 3.2rem
+      bottom 0
+      width 100%
       overflow hidden
       .title
         font-size 1.1rem
+        padding .3rem
       .offical-rank
         .rank
           display flex

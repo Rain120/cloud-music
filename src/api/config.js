@@ -9,7 +9,7 @@ let apiConfig = {
   DjProgram: `${url}/personalized/djprogram`,
   recommendPrivatePath: `${url}/personalized/privatecontent`,
   musicListDetailPath: `${url}recommendMVPath`,
-  AlbumDetailPath: `${url}/album`,
+  albumSongs: `${url}/album`,
   lyric: `${url}/lyric`,
   topMV: `${url}/top/mv`,
   MVDetail: `${url}/mv`,
@@ -26,7 +26,8 @@ let apiConfig = {
   newAlbum: `${url}/top/album`,
   playList: `${url}/top/playlist`,
   categoryList: `${url}/playlist/catlist`,
-  rank: `${url}/top/list`
+  rank: `${url}/top/list`,
+  copyright: `${url}/check/music`
 }
 
 export default apiConfig

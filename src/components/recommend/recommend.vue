@@ -10,7 +10,7 @@
             <slider>
               <div v-for="(banner, index) in banners" :key="index">
                 <a :href="banner.url">
-                  <img class="needsclick" :src="banner.picUrl"/>
+                  <img class="needsclick" :src="banner.picUrl" />
                 </a>
               </div>
             </slider>
@@ -129,6 +129,7 @@ export default {
   methods: {
     handlePlaylist (playList) {
       const bottom = playList.length > 0 ? '60px' : ''
+      console.log('dom 1', this.$refs.recommend, this.$refs.scroll)
       this.$refs.recommend.style.bottom = bottom
       this.$refs.scroll.refresh()
     },

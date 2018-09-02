@@ -346,7 +346,6 @@ export default {
     },
     back () {
       this.setFullScreen(false)
-      this.$router.back()
     },
     open () {
       this.setFullScreen(true)

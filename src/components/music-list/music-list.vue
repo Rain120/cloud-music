@@ -4,14 +4,12 @@
       <back-header
       :title="title"
       :description="description"
-      :descShow="descShow"
-      @back="back"/>
+      :descShow="descShow" />
       <song-list
         @select="playSong"
         @playAll="playAll"
         @changeTitle="changeTitle"
         :songs="songListDesc"
-        :songList="songList"
         :listType="this.$route.params.title"
         :title="this.$route.params.title"
         :collectShow="collectShow">
@@ -97,9 +95,6 @@ export default {
     changeTitle (listTitle) {
       this.title = listTitle ? this.currentListTitle : this.$route.params.title
     },
-    back () {
-      this.$router.back()
-    },
     _normalizeSongs (songs) {
       let ret = []
       songs.map((song, index) => {
@@ -130,7 +125,6 @@ export default {
           this.description += this.songList.description
           this.songListDesc.data = this._normalizeSongs(this.songList.tracks)
           this.songListDesc.collectNums = this.songList.subscribedCount
-          console.log('this.songListDesc', this.songListDesc)
         }
       })
     },

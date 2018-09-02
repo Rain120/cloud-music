@@ -52,3 +52,15 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Cloud-music 项目开发问题
+
+[问题详见](https://maxiang.io/)
+
+1.  audio play pause状态切换时报错DOMException
+
+![player audio使用报错](./screenshot/player audio使用报错.png)
+
+- 解决方案：因为play()请求被pause()调用中断，所以我们需要延时操作
+`this.$nextTick()` or `setTimeout(() => {}, timeout)`
+

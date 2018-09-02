@@ -2,7 +2,7 @@
  * @Author: Rainy
  * @Date: 2018-03-26 16:03:05
  * @Last Modified by: Rainy
- * @Last Modified time: 2018-08-25 22:16:07
+ * @Last Modified time: 2018-09-02 22:13:13
  */
 // 详见 https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi
 import axios from 'axios'
@@ -25,7 +25,7 @@ export function getBanner () {
 
 // 获取专辑内容
 export function getAlbum (id) {
-  let url = apiConfig.AlbumDetailPath + '?id=' + id
+  let url = apiConfig.albumSongs + '?id=' + id
   return axios.get(url).then(res => {
     return Promise.resolve(res)
   })
@@ -219,6 +219,14 @@ export function getCategoryList () {
 // 排行榜榜单
 export function getRankList (index) {
   let url = `${apiConfig.rank}?idx=${index}`
+  return axios.get(url).then(res => {
+    return Promise.resolve(res)
+  })
+}
+
+// 是否有版权
+export function isHasCopyright (index) {
+  let url = `${apiConfig.copyright}?idx=${index}`
   return axios.get(url).then(res => {
     return Promise.resolve(res)
   })

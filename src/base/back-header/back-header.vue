@@ -63,6 +63,7 @@ export default {
   },
   methods: {
     back () {
+      this.$router.back()
       this.$emit('back')
     }
   }
@@ -74,7 +75,7 @@ export default {
 
   .back-header
     width 100%
-    margin-top 10px
+    padding .5rem
     z-index 50
     display flex
     .back
