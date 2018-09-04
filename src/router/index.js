@@ -60,6 +60,20 @@ export default new Router({
       component: () => import('components/ranks/ranks')
     },
     {
+      path: '/mv',
+      component: () => import('components/mv/mv'),
+      redirect: '/mv/recommend-mv',
+      children: [
+        {
+          path: 'recommend-mv',
+          component: () => import('components/mv/recommend-mv/recommend-mv'),
+          meta: {
+            tab: 1
+          }
+        }
+      ]
+    },
+    {
       path: '/',
       redirect: '/index/recommend'
     }

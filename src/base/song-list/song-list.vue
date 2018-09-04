@@ -1,5 +1,5 @@
 <template>
-  <div class="song-list" ref="list">
+  <div class="song-list" ref="songList">
     <scroll
       class="scroll-wrapper"
       ref="scroll"
@@ -47,6 +47,7 @@
 import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import { playlistMixin } from 'common/js/mixin'
+
 export default {
   mixins: [playlistMixin],
   created () {
@@ -77,8 +78,8 @@ export default {
   methods: {
     handlePlaylist (playList) {
       const bottom = playList.length > 0 ? '60px' : ''
-      console.log('dom 2', this.$refs.recommend, this.$refs.scroll)
-      this.$refs.list.style.bottom = bottom
+      console.log('dom 2', this.$refs, this.$refs.songList, this.$refs.scroll)
+      this.$refs.songList.style.bottom = bottom
       this.$refs.scroll.refresh()
     },
     scrollPos (pos) {

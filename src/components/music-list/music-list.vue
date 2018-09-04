@@ -6,6 +6,7 @@
       :description="description"
       :descShow="descShow" />
       <song-list
+        ref="songList"
         @select="playSong"
         @playAll="playAll"
         @changeTitle="changeTitle"
@@ -75,9 +76,10 @@ export default {
       collectShow: true
     }
   },
-  created () {
+  mounted () {
     this.$nextTick(() => {
       this._getSongListDesc()
+      console.log('this.$refs', this.$refs, this.$refs.songList)
     })
   },
   methods: {

@@ -118,7 +118,7 @@ export default {
     this._getNewSong()
     this._getDjProgram()
     apiData.getNewAlbum().then(res => {
-      console.log('getNewAlbum', res)
+      // console.log('getNewAlbum', res)
     })
   },
   computed: {
@@ -129,7 +129,6 @@ export default {
   methods: {
     handlePlaylist (playList) {
       const bottom = playList.length > 0 ? '60px' : ''
-      console.log('dom 1', this.$refs.recommend, this.$refs.scroll)
       this.$refs.recommend.style.bottom = bottom
       this.$refs.scroll.refresh()
     },
@@ -161,6 +160,7 @@ export default {
       })
     },
     showNewSong (song) {
+      console.log(song)
       this.$router.push({
         name: 'NewSong',
         params: {
