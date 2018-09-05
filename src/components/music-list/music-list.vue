@@ -79,7 +79,6 @@ export default {
   mounted () {
     this.$nextTick(() => {
       this._getSongListDesc()
-      console.log('this.$refs', this.$refs, this.$refs.songList)
     })
   },
   methods: {

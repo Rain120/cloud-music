@@ -27,7 +27,8 @@
                   <div class="desc">
                     <p class="song-name">{{song.name}}</p>
                     <p class="info">
-                      <span class="singer">{{song.singer}}</span> - <span class="artist">{{song.album}}</span>
+                      {{songArtist(song.singer, song.album)}}
+                      <!-- <span class="singer">{{song.singer}}</span>-<span class="artist">{{song.album}}</span> -->
                     </p>
                   </div>
                 </div>
@@ -77,10 +78,15 @@ export default {
   },
   methods: {
     handlePlaylist (playList) {
-      const bottom = playList.length > 0 ? '60px' : ''
-      console.log('dom 2', this.$refs, this.$refs.songList, this.$refs.scroll)
-      this.$refs.songList.style.bottom = bottom
-      this.$refs.scroll.refresh()
+      if (this.$refs) {
+        const bottom = playList.length > 0 ? '60px' : ''
+        console.log('dom 2', this.$refs, this.$refs.songList, this.$refs.scroll)
+        this.$refs.songList.style.bottom = bottom
+        this.$refs.scroll.refresh()
+      }
+    },
+    songArtist (singer, album) {
+      return `${singer} - ${album}`
     },
     scrollPos (pos) {
       let title = false
@@ -171,10 +177,14 @@ export default {
               padding 10px 0
               border-thin(#a0a0a0)
               .desc
+                .song-name
+                  padding .3rem 0
                 .info
                   color #828080
-                  .singer, .artist
-                    font-size 12px
+                  font-size 13px
+                  no-wrap-nums(1)
+                  // .singer, .artist
+                  //   font-size 12px
     .loading-container
       position absolute
       width 100%

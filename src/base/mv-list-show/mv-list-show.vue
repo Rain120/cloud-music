@@ -131,11 +131,11 @@ export default {
       overflow hidden
       .mv-content
         .item
-          height 185px
+          height 200px
           width 100%
           img
             width 100%
-            height 150px
+            height 160px
           .artist
             height 30px
             margin-top 2px
