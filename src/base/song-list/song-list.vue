@@ -78,12 +78,9 @@ export default {
   },
   methods: {
     handlePlaylist (playList) {
-      if (this.$refs) {
-        const bottom = playList.length > 0 ? '60px' : ''
-        console.log('dom 2', this.$refs, this.$refs.songList, this.$refs.scroll)
-        this.$refs.songList.style.bottom = bottom
-        this.$refs.scroll.refresh()
-      }
+      const bottom = playList.length > 0 ? '60px' : ''
+      this.$refs.songList.style.bottom = bottom
+      this.$refs.scroll.refresh()
     },
     songArtist (singer, album) {
       return `${singer} - ${album}`

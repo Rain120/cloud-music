@@ -8,7 +8,7 @@ let apiConfig = {
   newSong: `${url}/personalized/newsong`,
   DjProgram: `${url}/personalized/djprogram`,
   recommendPrivatePath: `${url}/personalized/privatecontent`,
-  musicListDetailPath: `${url}recommendMVPath`,
+  musicListDetailPath: `${url}/recommendMVPath`,
   albumSongs: `${url}/album`,
   lyric: `${url}/lyric`,
   topMV: `${url}/top/mv`,

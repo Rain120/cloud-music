@@ -15,7 +15,8 @@
             <p class="title">官方榜</p>
             <ul>
               <li v-for="(rank, index) in officialRankLists"
-                :key="index">
+                :key="index"
+                @click="showRankList(rank)">
                 <div class="rank">
                   <div class="rank-left">
                     <img v-lazy="rank.data.playlist.coverImgUrl" />
@@ -56,7 +57,7 @@ import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import BackHeader from 'base/back-header/back-header'
 import * as apiData from 'api/data'
-// import { CODE_OK } from 'common/js/config'
+import { CODE_OK } from 'common/js/config'
 export default {
   data () {
     return {
@@ -78,6 +79,19 @@ export default {
     })
   },
   methods: {
+    showRankList (rank) {
+      if (CODE_OK === rank.data.code) {
+        this.$router.push({
+          name: 'MusicList',
+          params: {
+            title: '歌单'
+          },
+          query: {
+            id: rank.data.playlist.id
+          }
+        })
+      }
+    },
     getRankList (item, index) {
       return `${index}.${item.name} - ${item.ar[0].name}`
     },

@@ -2,7 +2,7 @@
  * @Author: Rainy
  * @Date: 2018-03-26 16:03:05
  * @Last Modified by: Rainy
- * @Last Modified time: 2018-09-02 22:13:13
+ * @Last Modified time: 2018-09-19 23:58:00
  */
 // 详见 https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi
 import axios from 'axios'
