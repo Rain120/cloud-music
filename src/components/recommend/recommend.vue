@@ -69,7 +69,7 @@
             </div>
         </div>
         <div class="recommend-dj-program common">
-          <router-link to="/index/broadcast">
+          <router-link to="/broadcast">
             <div class="title" @click="showAllBroadcast">主播电台<i class="icon iconfont music-arrow-right"></i></div>
           </router-link>
           <div class="dj-program-content common-content">

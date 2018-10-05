@@ -27,7 +27,8 @@ let apiConfig = {
   playList: `${url}/top/playlist`,
   categoryList: `${url}/playlist/catlist`,
   rank: `${url}/top/list`,
-  copyright: `${url}/check/music`
+  copyright: `${url}/check/music`,
+  highquality: `${url}/top/playlist/highquality`
 }
 
 export default apiConfig

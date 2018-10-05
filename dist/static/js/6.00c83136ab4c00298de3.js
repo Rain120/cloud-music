@@ -1,2 +1,0 @@
-webpackJsonp([6],{YA4d:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement;return(this._self._c||e)("div",{staticClass:"my-friend"},[this._v("\n    my-friend\n")])},staticRenderFns:[]};var i=n("VU/8")({},r,!1,function(e){n("qhft")},"data-v-b304be12",null);t.default=i.exports},qhft:function(e,t){}});
-//# sourceMappingURL=6.00c83136ab4c00298de3.js.map

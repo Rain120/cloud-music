@@ -6,6 +6,10 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      path: '/',
+      redirect: '/index/recommend'
+    },
+    {
       path: '/index',
       name: 'Index',
       component: () => import('components/index/index'),
@@ -55,6 +59,11 @@ export default new Router({
       component: () => import('components/all-song-lists/all-song-lists')
     },
     {
+      path: '/high-quality',
+      name: 'HighQuality',
+      component: () => import('components/high-quality/high-quality')
+    },
+    {
       path: '/ranks',
       name: 'Ranks',
       component: () => import('components/ranks/ranks')
@@ -72,10 +81,6 @@ export default new Router({
           }
         }
       ]
-    },
-    {
-      path: '/',
-      redirect: '/index/recommend'
     }
   ]
 })

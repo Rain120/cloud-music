@@ -1,5 +1,8 @@
 <template>
-  <div class="song-list" ref="songList">
+  <div
+    class="song-list"
+    ref="songList"
+    v-if="songs.data">
     <scroll
       class="scroll-wrapper"
       ref="scroll"
@@ -57,7 +60,7 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      this.$refs.scroll.refresh()
+      this.$refs.scroll && this.$refs.scroll.refresh()
     })
   },
   props: {
@@ -79,8 +82,8 @@ export default {
   methods: {
     handlePlaylist (playList) {
       const bottom = playList.length > 0 ? '60px' : ''
-      this.$refs.songList.style.bottom = bottom
-      this.$refs.scroll.refresh()
+      this.$refs.songList && (this.$refs.songList.style.bottom = bottom)
+      this.$refs.scroll && this.$refs.scroll.refresh()
     },
     songArtist (singer, album) {
       return `${singer} - ${album}`
@@ -101,7 +104,7 @@ export default {
       this.$emit('select', song, index)
     },
     playNums () {
-      return `播放全部(共${this.songs.data.length})首`
+      return this.songs.data ? `播放全部(共${this.songs.data.length})首` : ''
     },
     collectNum () {
       if (this.collectNums <= Math.pow(10, 5)) {
@@ -121,6 +124,7 @@ export default {
 
 <style lang="stylus" scoped>
   @import "~common/stylus/mixin"
+
   .song-list
     position absolute
     top 3.2rem

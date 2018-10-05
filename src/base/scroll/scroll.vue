@@ -101,6 +101,9 @@ export default {
     refresh () {
       this.scroll && this.scroll.refresh()
     },
+    destroyed () {
+      this.scroll && this.scroll.destroy()
+    },
     scrollTo () {
       this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
     },

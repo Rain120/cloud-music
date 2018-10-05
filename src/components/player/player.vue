@@ -14,7 +14,7 @@
         :singer="currentSong.singer"
         :songName="currentSong.name"
         :player="player"
-        @back="back"></back-header>
+        @back="back" />
         <div class="normal-top" ref="topCdWrapper" @click="showLyric">
           <div class="top-wrapper">
             <div class="triger" :class="{'triger-paused': !playing}">
@@ -346,6 +346,7 @@ export default {
     },
     back () {
       this.setFullScreen(false)
+      this.$router.go(-1)
     },
     open () {
       this.setFullScreen(true)

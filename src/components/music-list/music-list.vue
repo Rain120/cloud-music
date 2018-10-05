@@ -72,7 +72,7 @@ export default {
       currentListTitle: '',
       title: this.$route.params.title,
       description: '编辑推荐：',
-      descShow: true,
+      descShow: false,
       collectShow: true
     }
   },
